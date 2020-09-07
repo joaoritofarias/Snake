@@ -34,19 +34,29 @@
             }, 100);
 
             document.addEventListener("keydown", (e) => {
+                let snakeX = snake[0].x;
+                let snakeY = snake[0].y;
+
                 if ( e.keyCode === 37) {
-                    snake[0].x -= box;
+                    snakeX -= box;
                 } 
                 if (e.keyCode === 38 ) {
-                    snake[0].y -= box;
+                    snakeY -= box;
                 }
                 if (e.keyCode === 39 ) {
-                    snake[0].x += box;
+                    snakeX += box;
                 }
                 if (e.keyCode === 40 ) {
-                    snake[0].y += box;
+                    snakeY += box;
                 }
 
+                /*Verificação de game over*/
+
+                if(snakeX < box || snakeY < box*3 || snakeX > box*17 || snakeY > box*17 ) {
+                    alert("GAME OVER");
+
+                }
+                snake.unshift({x: snakeX, y: snakeY});
             });
 
 
