@@ -33,6 +33,22 @@
         
             }, 100);
 
+            document.addEventListener("keydown", (e) => {
+                if ( e.keyCode === 37) {
+                    snake[0].x -= box;
+                } 
+                if (e.keyCode === 38 ) {
+                    snake[0].y -= box;
+                }
+                if (e.keyCode === 39 ) {
+                    snake[0].x += box;
+                }
+                if (e.keyCode === 40 ) {
+                    snake[0].y += box;
+                }
+
+            });
+
 
         })
     </script>
