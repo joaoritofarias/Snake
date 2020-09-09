@@ -28,10 +28,47 @@
 
             let food = randomXY();
 
+            let direction;
+
             const gameDrawing = setInterval(function() {
                 canvasCtx.drawImage(groundImg, 0, 0);
 
                 canvasCtx.drawImage(foodImg, food.x, food.y);
+
+                let snakeX = snake[0].x;
+                let snakeY = snake[0].y;
+
+                if (direction === "left") {
+                    snakeX -= box;
+                } 
+                if (direction === "up") {
+                    snakeY -= box;
+                }
+                if (direction === "right") {
+                    snakeX += box;
+                }
+                if (direction === "down") {
+                    snakeY += box;
+                }
+
+                /*Verificação de game over*/
+
+                if(snakeX < box || snakeY < box*3 || snakeX > box*17 || snakeY > box*17 || collisionChecker(snake) ) {
+                    alert("GAME OVER");
+
+                    clearInterval(gameDrawing);
+
+                }
+
+                snake.unshift({x: snakeX, y: snakeY});
+
+                if (snakeX === food.x && snakeY === food.y) {
+                    /*comeu*/
+                    food = randomXY();
+                }
+                else{
+                    snake.pop();
+                }
 
                 for(let i = 0; i < snake.length; i++) {
 
@@ -52,47 +89,30 @@
             }, 100);
 
             const collisionChecker = (snake) => {
-                for(let i = 1; i < snake.length ; i++) {
-                    if(snake[0].x === snake[i].x && snake[0].y === snake[i].y){
+                for(let i = 1; i < snake.length; i++) {
+                    if(snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
                         return true;
                     }
                 }
+ 
+                return false;
             }
 
             document.addEventListener("keydown", (e) => {
-                let snakeX = snake[0].x;
-                let snakeY = snake[0].y;
 
-                if ( e.keyCode === 37) {
-                    snakeX -= box;
+                if ( e.keyCode === 37 && direction !== "right") {
+                    direction = "left";
                 } 
-                if (e.keyCode === 38 ) {
-                    snakeY -= box;
+                if (e.keyCode === 38 && direction !== "down") {
+                    direction = "up";
                 }
-                if (e.keyCode === 39 ) {
-                    snakeX += box;
+                if (e.keyCode === 39 && direction !== "left") {
+                    direction = "right";
                 }
-                if (e.keyCode === 40 ) {
-                    snakeY += box;
-                }
-
-                /*Verificação de game over*/
-
-                if(snakeX < box || snakeY < box*3 || snakeX > box*17 || snakeY > box*17 || collisionChecker(snake) ) {
-                    alert("GAME OVER");
-                    clearInterval(gameDrawing);
-
+                if (e.keyCode === 40 && direction !== "up") {
+                    direction = "down";
                 }
 
-                snake.unshift({x: snakeX, y: snakeY});
-
-                if (snakeX === food.x && snakeY === food.y) {
-                    /*comeu*/
-                    food = randomXY();
-                }
-                else{
-                    snake.pop();
-                }
             });
 
 
