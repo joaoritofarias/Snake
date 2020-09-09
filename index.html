@@ -30,6 +30,8 @@
 
             let direction;
 
+            let score = 0;
+
             const gameDrawing = setInterval(function() {
                 canvasCtx.drawImage(groundImg, 0, 0);
 
@@ -52,7 +54,6 @@
                 }
 
                 /*Verificação de game over*/
-
                 if(snakeX < box || snakeY < box*3 || snakeX > box*17 || snakeY > box*17 || collisionChecker(snake) ) {
                     alert("GAME OVER");
 
@@ -65,6 +66,7 @@
                 if (snakeX === food.x && snakeY === food.y) {
                     /*comeu*/
                     food = randomXY();
+                    score++;
                 }
                 else{
                     snake.pop();
@@ -85,6 +87,11 @@
                     canvasCtx.strokeStyle = "#F00";
                     canvasCtx.strokeRect(snake[i].x, snake[i].y, box, box);
                 }
+
+                /* escrever o score */
+                canvasCtx.fillStyle = "#FFF";
+                canvasCtx.font = "45px Calibri";
+                canvasCtx.fillText(score,box*2,box*1.6);
         
             }, 100);
 
